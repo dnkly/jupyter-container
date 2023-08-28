@@ -1,0 +1,12 @@
+#!/bin/bash
+
+container=jupyter-container
+url=http://localhost:8888
+
+if podman ps --format "{{.Names}}" | rg -q $container; then
+    podman stop $container
+    exit 0
+fi
+
+podman start $container
+flatpak run org.mozilla.firefox -private-window $url
